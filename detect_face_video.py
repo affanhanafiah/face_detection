@@ -1,12 +1,15 @@
 import cv2
+import time
+from datetime import timedelta
 
 # Load the cascade
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+start = time.monotonic()
 
 # To capture video from webcam. 
-cap = cv2.VideoCapture(0)
+# cap = cv2.VideoCapture(0)
 # To use a video file as input 
-# cap = cv2.VideoCapture('coba.mp4')
+cap = cv2.VideoCapture('coba.mp4')
 # Membuat frame yang akan direkam
 frame_width = int(cap.get(3))
 frame_height = int(cap.get(4))
@@ -37,11 +40,13 @@ while True:
     # k = cv2.waitKey(1) & 0xff
     # if k==27:
     #     break
-    if cv2.waitKey(1) & 0xff == ord('q'):
+    if cv2.waitKey(1) & 0xff == ord('q') or total_frame==30 :
         break
 
 # Release the VideoCapture object
-print(total_frame)
+print("Total frame : ", total_frame)
+end = time.monotonic()
+print("Duration : ", timedelta(seconds=end - start))
 cap.release()
 out.release()
 cv2.destroyAllWindows()
